@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v0.2.2
+_src_path: gh:stfukuda/python-package
+author_name: stfukuda
+description: Tools and assets for Lab-Aid.
+license: MIT
+module_name: lab_aid
+project_name: Lab-Aid
+project_slug: lab-aid
+python_version: '3.13'
