@@ -1,0 +1,9 @@
+{
+    "recommendations": [
+        "openai.chatgpt",
+        "bierner.markdown-mermaid"
+    ],
+    "unwantedRecommendations": [
+        "ms-python.autopep8"
+    ]
+}
