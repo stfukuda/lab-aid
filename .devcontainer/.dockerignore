@@ -1,0 +1,19 @@
+# Build context should exclude files generated locally
+.git
+.venv
+.uv
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.copier-answers.yml
+.env
+.env.*
+.coverage
+dist
+build
+*.pyc
+__pycache__/
+htmlcov
+site
+uv.lock
+uv.lock.backup

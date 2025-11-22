@@ -1,0 +1,46 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**/*.py"
+      - "tests/**/*.py"
+      - "pyproject.toml"
+      - ".pre-commit-config.yaml"
+      - "Justfile"
+      - ".markdownlint.json"
+  pull_request:
+    branches: [main]
+    paths:
+      - "src/**/*.py"
+      - "tests/**/*.py"
+      - "pyproject.toml"
+      - ".pre-commit-config.yaml"
+      - ".markdownlint.json"
+      - "Justfile"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Install Python
+        run: uv python install 3.13
+
+      - name: Install tooling
+        run: uv sync --group lint --frozen
+
+      - name: Ruff (lint)
+        run: uv run ruff check ./src ./tests
+
+      - name: Mypy (type check)
+        run: uv run mypy ./src ./tests
+
+      - name: Bandit (security)
+        run: uv run bandit -c pyproject.toml -r ./src ./tests

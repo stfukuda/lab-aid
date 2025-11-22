@@ -1,0 +1,14 @@
+{
+    "[bat]": {
+        "files.encoding": "shiftjis",
+    },
+    "[powershell]": {
+        "files.encoding": "utf8bom"
+    },
+    "files.associations": {
+        "*.bat": "bat",
+        "*.cmd": "bat",
+        "*.ps1": "powershell"
+    },
+    "workbench.externalBrowser": "edge"
+}
