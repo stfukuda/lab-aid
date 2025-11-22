@@ -32,7 +32,11 @@ extensions = [
 ]
 
 templates_path = ["_templates"]
-exclude_patterns: list[str] = []
+exclude_patterns: list[str] = [
+    "guidelines",
+    "design",
+    "official-docs",
+]
 
 html_theme = "furo"
 html_static_path = ["_static"]
