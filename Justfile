@@ -95,6 +95,18 @@ test:
 build: test
     uv build
 
+# Copy latest built wheel into windows distribution folder
+ship: build
+    #!/usr/bin/env sh
+    latest_wheel="$(ls -t dist/lab_aid-*.whl 2>/dev/null | head -n 1)"
+    if [ -z "$latest_wheel" ]; then
+        echo "dist/lab_aid-*.whl が見つかりません。先に 'just build' を実行してください。" >&2
+        exit 1
+    fi
+    mkdir -p windows
+    cp "$latest_wheel" "windows/$(basename "$latest_wheel")"
+    echo "Copied $(basename "$latest_wheel") to windows/."
+
 # Build Sphinx HTML docs
 docs:
     uv run sphinx-build -b html docs docs/_build/html
