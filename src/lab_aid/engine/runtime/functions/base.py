@@ -34,7 +34,7 @@ def to_decimal(value: Any) -> Decimal:
     return Decimal(value)
 
 
-def force_int_if_integral(dec_value: Decimal, rounding) -> Any:
+def force_int_if_integral(dec_value: Decimal, rounding: str | None) -> Any:
     """端数がない場合は整数へ変換し、そうでなければ浮動小数点のまま返す。
 
     Args:

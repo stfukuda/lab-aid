@@ -6,7 +6,7 @@ import ast
 import re
 from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Match
 
 from .constants import MAX_FOR_ITERS, MAX_NEST_DEPTH
 from .functions import (
@@ -46,7 +46,9 @@ OP_MAPPING = {
 class FormatAwareNumber(float):
     """フォーマット済み文字列表現を保持する数値ラッパー。"""
 
-    def __new__(cls, value: float, formatted: str | None):
+    formatted: str | None
+
+    def __new__(cls, value: float, formatted: str | None) -> FormatAwareNumber:
         obj = float.__new__(cls, value)
         obj.formatted = formatted
         return obj
@@ -141,7 +143,7 @@ class Engine:
             return mask
 
         quote_mask = build_quote_mask(expr)
-        matches: list[tuple[int, int, re.Match]] = []
+        matches: list[tuple[int, int, Match[str]]] = []
         for match in RE_ITEM_ANY.finditer(expr):
             start, end = match.span()
             if any(quote_mask[start:end]):

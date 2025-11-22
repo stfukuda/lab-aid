@@ -9,6 +9,7 @@ from pathlib import Path
 
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.worksheet import Worksheet
 
 from .engine import evaluate
 
@@ -101,7 +102,7 @@ def ensure_template(path: Path) -> bool:
     return True
 
 
-def _iter_data_rows(ws) -> Iterable[int]:
+def _iter_data_rows(ws: Worksheet) -> Iterable[int]:
     """入力が存在するデータ行番号をイテレートする。
 
     Args:
@@ -118,7 +119,9 @@ def _iter_data_rows(ws) -> Iterable[int]:
             yield row
 
 
-def _evaluate_row(ws, row: int) -> tuple[str | None, str | None, str | None, str]:
+def _evaluate_row(
+    ws: Worksheet, row: int
+) -> tuple[str | None, str | None, str | None, str]:
     """1 行分の入力を評価し、結果を返す。
 
     Args:
@@ -145,7 +148,9 @@ def _evaluate_row(ws, row: int) -> tuple[str | None, str | None, str | None, str
     return raw, edited, reported, status
 
 
-def _write_text_cell(ws, row: int, column: int, value: object | None) -> None:
+def _write_text_cell(
+    ws: Worksheet, row: int, column: int, value: object | None
+) -> None:
     """テキスト形式のセルを設定する。
 
     Args:
@@ -158,7 +163,14 @@ def _write_text_cell(ws, row: int, column: int, value: object | None) -> None:
     cell.number_format = "@"
 
 
-def _record_results(ws, row: int, raw, edited, reported, status: str) -> None:
+def _record_results(
+    ws: Worksheet,
+    row: int,
+    raw: str | None,
+    edited: str | None,
+    reported: str | None,
+    status: str,
+) -> None:
     """評価結果をワークシートへ記録する。
 
     Args:

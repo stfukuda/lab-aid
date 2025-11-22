@@ -128,8 +128,8 @@ def evaluate(
         )
         vars_after = engine.run_lines(runnable_script.splitlines())
 
-        edited_text: str | None = None
-        reported_text: str | None = None
+        edited_text = None
+        reported_text = None
 
         if engine.last_print is not None:
             edited_text = engine.last_print

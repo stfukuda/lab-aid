@@ -162,7 +162,8 @@ def modd_func(args: Sequence[Any]) -> BuiltinNumericResult:
     dec_value = to_decimal(numeric)
     integer_part = Decimal(math.trunc(numeric))
     fraction_dec = (dec_value - integer_part).copy_abs()
-    digits = max(0, -fraction_dec.as_tuple().exponent)
+    exponent = int(fraction_dec.as_tuple().exponent)
+    digits = max(0, -exponent)
     fraction = float(fraction_dec)
     format_hint = f"fixed:{digits}" if digits > 0 else None
     return BuiltinNumericResult(normalize_number(fraction), format_hint)
@@ -338,12 +339,14 @@ def max_func(args: Sequence[Any]) -> BuiltinNumericResult:
     if len(args) == 1:
         numbers = collect_numeric_values(args[0], "max")
         return BuiltinNumericResult(normalize_number(max(numbers)))
-    best = None
+    best: float | None = None
     for arg in args:
         values = collect_numeric_values(arg, "max")
         candidate = sum(values) / len(values)
         if best is None or candidate > best:
             best = candidate
+    if best is None:
+        raise TypeError("max: 比較可能な数値がありません。")
     return BuiltinNumericResult(normalize_number(best))
 
 
@@ -364,12 +367,14 @@ def min_func(args: Sequence[Any]) -> BuiltinNumericResult:
     if len(args) == 1:
         numbers = collect_numeric_values(args[0], "min")
         return BuiltinNumericResult(normalize_number(min(numbers)))
-    best = None
+    best: float | None = None
     for arg in args:
         values = collect_numeric_values(arg, "min")
         candidate = sum(values) / len(values)
         if best is None or candidate < best:
             best = candidate
+    if best is None:
+        raise TypeError("min: 比較可能な数値がありません。")
     return BuiltinNumericResult(normalize_number(best))
 
 
