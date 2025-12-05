@@ -172,3 +172,6 @@ Thumbs.db
 
 # uv package manager cache
 .uv/
+
+*.xlsx
+*.xlsm
